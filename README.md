@@ -1,44 +1,69 @@
-# HELM PUBLISH ACTION
-
-[![Version](https://img.shields.io/github/v/release/huggingface/semver-release-action?label=Release)](https://github.com/huggingface/semver-release-action/releases)
-[![License](https://img.shields.io/badge/License-Apache_2.0-yellow.svg)](https://opensource.org/licenses/Apache-2.0)
-
-Github Action to simplify Helm Chart publish into a registry.
+<h1 style="text-align: center; border-bottom: none;">📦🚀 semver-release-action</h1>
+<h3 style="text-align: center">Github Action to release projects using <a href="https://github.com/semantic-release/semantic-release">Semantic Release</a>.</h3>
+<p style="text-align: center">
+    <a href="https://github.com/huggingface/semver-release-action/releases">
+        <img alt="Latest release" src="https://img.shields.io/github/v/release/huggingface/semver-release-action?label=Release">
+    </a>
+    <a href="https://opensource.org/licenses/Apache-2.0">
+        <img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-yellow.svg">
+    </a>
+</p>
 
 # Usage
 
-See [action.yml](action.yml)
+This github action automates the whole package release workflow including: determining the next version number, generating the release notes, and publishing the package.
+
+```yaml
+name: Release project
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Release
+        uses: huggingface/semver-release-action@latest
+```
+
+## Inputs parameters
+
+### dryRun
+Execute action in dry mode. 
+If `true`, release will not be pushed.
 
 ```yaml
 - name: Helm Publish Action
   uses: huggingface/helm-publish-action@latest
   with:
-    workingDirectory: charts
-    repository: https://registry.your-domain.com
-    username: ${{ secrets.REGISTRY_USERNAME }}
-    password: ${{ secrets.REGISTRY_PASSWORD }}
-    beforeHook: cd subcharts/my-sub-chart && helm dependencies update
+    dryRun: true
 ```
 
-### Use Tailscale VPN
-
-If your registry is only accessible on a private network, and you use Tailscale, you can pass your tailscale Key to the action.
+### commitAnalyzerPluginOpts
+JSON Options to pass to commit analyzer plugins. See : https://github.com/semantic-release/commit-analyzer#options
 
 ```yaml
 - name: Helm Publish Action
   uses: huggingface/helm-publish-action@latest
   with:
-    tailscaleKey: ${{ secrets.TAILSCALE_AUTHKEY }}
+    commitAnalyzerPluginOpts: {...}
 ```
 
-### Before hook
+## Outputs
 
-If you need to execute a command before to publish, pass it via `beforeHook` argument.
-This hook is usefully if you have subchart inside your Chart and you want update it before to publish your parent chart.
+### tag
+Tag as tag-prefix + version, example: v1.2.3
 
-```yaml
-- name: Helm Publish Action
-  uses: huggingface/helm-publish-action@latest
-  with:
-    beforeHook: cd subcharts/my-sub-chart && helm dependencies update
-```
+### version
+New version or current version if not released, example: 1.2.3
+
+### changelog
+Changelog of the new version
+
+### released
+True if new version was released
