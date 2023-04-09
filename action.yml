@@ -1,0 +1,28 @@
+name: 'Semver release @ Huggingface'
+description: 'Github action to release projects using semantic versioning'
+author: 'Huggingface'
+branding:
+  icon: activity
+  color: yellow
+inputs:
+  dryRun:
+    description: 'Execute action in dry mode'
+    required: false
+    default: 'false'
+  commitAnalyzerPluginOpts:
+    description: 'JSON Options to pass to commit analyzer plugins. See : https://github.com/semantic-release/commit-analyzer#options'
+    required: false
+    default: ''
+outputs:
+  tag:
+    description: 'Tag as tag-prefix + version, example: v1.2.3'
+  version:
+    description: 'New version or current version if not released, example: 1.2.3'
+  changelog:
+    description: 'Changelog of the new version'
+  released:
+    description: 'True if new version was released'
+runs:
+  using: node16
+  main: 'src/index.js'
+  post-if: 'success()'
