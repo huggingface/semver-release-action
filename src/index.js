@@ -1,8 +1,8 @@
 import core from '@actions/core';
 import semanticRelease from 'semantic-release';
 
-async function main () {
-    const dryRun = core.getBooleanInput('dryRun');
+async function main() {
+    const dryRun = core.getInput('dryRun') ? core.getBooleanInput('dryRun')  : false;
     const branches = core.getInput('branches') ? JSON.parse(core.getInput('branches')) : ['main'];
     const commitAnalyzerPluginOpts = core.getInput('commitAnalyzerPluginOpts');
 
