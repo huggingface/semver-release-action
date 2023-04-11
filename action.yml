@@ -1,0 +1,31 @@
+name: 'Semver release @ Huggingface'
+description: 'Github action to release projects using semantic versioning'
+author: 'Huggingface'
+branding:
+  icon: activity
+  color: yellow
+inputs:
+  branches:
+    description: 'The branches on which releases should happen'
+    required: true
+    default: '[main]'
+  dryRun:
+    description: 'The objective of the dry-run mode is to get a preview of the pending release. Dry-run mode skips the following steps: prepare, publish, addChannel, success and fail. In addition to this it prints the next version and release notes to the console.'
+    required: false
+    default: 'false'
+  commitAnalyzerPluginOpts:
+    description: 'JSON Options to pass to commit analyzer plugins. See : https://github.com/semantic-release/commit-analyzer#options'
+    required: false
+    default: ''
+outputs:
+  tag:
+    description: 'Tag as tag-prefix + version, example: v1.2.3'
+  version:
+    description: 'New version or current version if not released, example: 1.2.3'
+  changelog:
+    description: 'Changelog of the new version'
+  released:
+    description: 'True if new version was released'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
