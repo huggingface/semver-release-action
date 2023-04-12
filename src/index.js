@@ -8,7 +8,7 @@ async function main() {
     const commitAnalyzerPluginOpts = core.getInput('commitAnalyzerPluginOpts') ? JSON.parse(core.getInput('commitAnalyzerPluginOpts')) : null;
 
     try {
-        core.debug(`Start execution with following env var : ${process.env}`);
+        core.debug(`Start execution with following env var : ${JSON.stringify(process.env)}`);
 
         const result = await semanticRelease(
             {
@@ -30,6 +30,7 @@ async function main() {
         );
 
         if (result) {
+            core.debug(`semantic result : ${result}`);
             const { nextRelease } = result;
 
             core.setOutput('released', dryRun !== true);
