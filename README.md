@@ -65,6 +65,16 @@ JSON Options to pass to commit analyzer plugins. See : https://github.com/semant
     commitAnalyzerPluginOpts: {...}
 ```
 
+### githubPluginOpts
+JSON Options to pass to github plugins. See : https://github.com/semantic-release/github#options
+    
+```yaml
+- name: Helm Publish Action
+  uses: huggingface/helm-publish-action@latest
+  with:
+    githubPluginOpts: {...}
+```
+
 ## Outputs
 
 ### tag

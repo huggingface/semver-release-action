@@ -6,6 +6,7 @@ async function main() {
     const dryRun = core.getInput('dryRun') ? core.getBooleanInput('dryRun')  : false;
     const branches = core.getInput('branches') ? JSON.parse(core.getInput('branches')) : ['main'];
     const commitAnalyzerPluginOpts = core.getInput('commitAnalyzerPluginOpts') ? JSON.parse(core.getInput('commitAnalyzerPluginOpts')) : null;
+    const githubPluginOpts = core.getInput('githubPluginOpts') ? JSON.parse(core.getInput('githubPluginOpts')) : null;
 
     try {
         core.debug(`Start execution with following env var : ${JSON.stringify(process.env)}`);
@@ -17,7 +18,7 @@ async function main() {
                 plugins: [
                     '@semantic-release/commit-analyzer', commitAnalyzerPluginOpts || {},
                     '@semantic-release/release-notes-generator',
-                    '@semantic-release/github',
+                    '@semantic-release/github', githubPluginOpts || {},
                 ]
             },
             {

@@ -17,6 +17,10 @@ inputs:
     description: 'JSON Options to pass to commit analyzer plugins. See : https://github.com/semantic-release/commit-analyzer#options'
     required: false
     default: ''
+  githubPluginOpts:
+    description: 'JSON Options to pass to github plugins. See : https://github.com/semantic-release/github#options'
+    required: false
+    default: ''
 outputs:
   tag:
     description: 'Tag as tag-prefix + version, example: v1.2.3'
