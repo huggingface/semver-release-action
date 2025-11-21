@@ -15,7 +15,7 @@ async function main() {
                 dryRun,
                 branches,
                 plugins: [
-                    '@semantic-release/commit-analyzer', commitAnalyzerPluginOpts || {},
+                    ['@semantic-release/commit-analyzer', commitAnalyzerPluginOpts || {}],
                     '@semantic-release/release-notes-generator',
                     '@semantic-release/github',
                 ]
