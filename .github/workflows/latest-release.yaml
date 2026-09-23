@@ -3,8 +3,12 @@ on:
   release:
     types: [published]
 
+permissions: {}
+
 jobs:
   run:
+    permissions:
+      contents: write
     name: Add latest tag
     runs-on: ubuntu-latest
     steps:
